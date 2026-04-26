@@ -1,0 +1,1515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mark Jules B. Surat — OOP E-Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --teal:      #0fd4c0;
+    --teal-dark: #0aaa98;
+    --teal-dim:  rgba(15,212,192,0.12);
+    --black:     #0a0a0a;
+    --dark:      #111111;
+    --dark2:     #181818;
+    --card:      #141414;
+    --border:    #242424;
+    --border2:   #333333;
+    --white:     #ffffff;
+    --off:       #b8b8b8;
+    --muted:     #666666;
+    --tnr:       'Times New Roman', Times, serif;
+    --sans:      'Space Grotesk', sans-serif;
+    --mono:      'DM Mono', monospace;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 200;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 3rem;
+    height: 60px;
+    background: rgba(10,10,10,0.92);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo {
+    font-family: var(--sans);
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--teal);
+    text-decoration: none;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    color: var(--muted);
+    text-decoration: none;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--teal); }
+
+  /* ── HERO ── */
+  #home {
+    position: relative;
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    overflow: hidden;
+  }
+  .hero-left {
+    background: var(--teal);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 5rem 3.5rem 4rem;
+    position: relative;
+  }
+  .hero-left::after {
+    content: '';
+    position: absolute;
+    top: 60px; left: 0; right: 0; bottom: 0;
+    background: repeating-linear-gradient(
+      -45deg,
+      transparent,
+      transparent 28px,
+      rgba(0,0,0,0.06) 28px,
+      rgba(0,0,0,0.06) 29px
+    );
+  }
+  .hero-label {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(0,0,0,0.55);
+    margin-bottom: 1rem;
+    position: relative; z-index: 1;
+    opacity: 0; animation: fadeUp 0.6s 0.2s forwards;
+  }
+  .hero-name {
+    font-family: var(--sans);
+    font-weight: 700;
+    font-size: clamp(2.8rem, 6vw, 5.5rem);
+    line-height: 1;
+    color: var(--black);
+    position: relative; z-index: 1;
+    opacity: 0; animation: fadeUp 0.6s 0.35s forwards;
+  }
+  .hero-right {
+    background: var(--dark);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 7rem 3.5rem 4rem;
+    border-left: 1px solid var(--border);
+  }
+  .hero-sub {
+    font-family: var(--tnr);
+    font-style: italic;
+    font-size: 1.1rem;
+    color: var(--off);
+    margin-bottom: 1.8rem;
+    opacity: 0; animation: fadeUp 0.6s 0.5s forwards;
+  }
+  .hero-intro {
+    font-family: var(--tnr);
+    font-size: 1rem;
+    color: var(--muted);
+    line-height: 1.8;
+    margin-bottom: 2.5rem;
+    opacity: 0; animation: fadeUp 0.6s 0.65s forwards;
+  }
+  .hero-tags {
+    display: flex; flex-wrap: wrap; gap: 0.5rem;
+    opacity: 0; animation: fadeUp 0.6s 0.8s forwards;
+  }
+  .tag {
+    font-family: var(--mono);
+    font-size: 0.62rem;
+    padding: 0.28rem 0.85rem;
+    border: 1px solid var(--border2);
+    color: var(--muted);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .tag.teal { border-color: var(--teal); color: var(--teal); background: var(--teal-dim); }
+
+  /* ── SECTION BASE ── */
+  section {
+    padding: 7rem 3.5rem;
+  }
+  .section-eyebrow {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 0.5rem;
+  }
+  .section-title {
+    font-family: var(--sans);
+    font-weight: 700;
+    font-size: clamp(2rem, 4vw, 3rem);
+    color: var(--white);
+    margin-bottom: 3rem;
+    line-height: 1.05;
+  }
+  .teal-bar {
+    width: 40px; height: 3px;
+    background: var(--teal);
+    margin-bottom: 0.8rem;
+  }
+
+  /* ── ABOUT ── */
+  #about { background: var(--dark); }
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+  .acard {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 2rem;
+    transition: border-color 0.2s;
+  }
+  .acard:hover { border-color: var(--teal); }
+  .acard-label {
+    font-family: var(--mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 1rem;
+    display: block;
+  }
+  .info-row { display: flex; flex-direction: column; gap: 1rem; }
+  .info-item { display: flex; flex-direction: column; gap: 0.1rem; }
+  .info-key {
+    font-family: var(--mono);
+    font-size: 0.58rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .info-val {
+    font-family: var(--tnr);
+    font-size: 1rem;
+    color: var(--white);
+  }
+  .words-row { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+  .word-chip {
+    font-family: var(--sans);
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 0.3rem 0.9rem;
+    background: var(--teal-dim);
+    border: 1px solid var(--teal);
+    color: var(--teal);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  .goal-list { list-style: none; display: flex; flex-direction: column; gap: 0.9rem; }
+  .goal-list li {
+    font-family: var(--tnr);
+    font-size: 1rem;
+    color: var(--off);
+    padding-left: 1.4rem;
+    position: relative;
+    line-height: 1.65;
+  }
+  .goal-list li::before {
+    content: '→';
+    position: absolute; left: 0;
+    color: var(--teal);
+    font-family: var(--mono);
+    font-size: 0.85rem;
+  }
+
+  /* ── MIDTERM ── */
+  #midterm { background: var(--black); }
+
+  /* Tabs */
+  .sub-tabs {
+    display: flex;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 3rem;
+  }
+  .tab-btn {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.7rem 1.4rem;
+    border: none;
+    background: transparent;
+    color: var(--muted);
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .tab-btn:hover { color: var(--teal); }
+  .tab-btn.active { color: var(--teal); border-bottom-color: var(--teal); }
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  /* Output Card */
+  .ocard {
+    background: var(--dark);
+    border: 1px solid var(--border);
+    padding: 2rem;
+    margin-bottom: 1.5rem;
+    transition: border-color 0.2s;
+  }
+  .ocard:hover { border-color: var(--border2); }
+  .ocard-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .onum {
+    font-family: var(--mono);
+    font-size: 0.6rem;
+    width: 2rem; height: 2rem;
+    display: flex; align-items: center; justify-content: center;
+    border: 1px solid var(--teal);
+    color: var(--teal);
+    flex-shrink: 0;
+    background: var(--teal-dim);
+  }
+  .ocard h3 {
+    font-family: var(--sans);
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--white);
+  }
+  .ocard-meta {
+    font-family: var(--mono);
+    font-size: 0.62rem;
+    color: var(--muted);
+    margin-bottom: 1.2rem;
+    letter-spacing: 0.05em;
+  }
+
+  /* Body text */
+  .bt {
+    font-family: var(--tnr);
+    color: var(--off);
+    font-size: 1rem;
+    line-height: 1.8;
+    margin-bottom: 1rem;
+  }
+  .bt:last-child { margin-bottom: 0; }
+  .bt strong { color: var(--white); font-weight: 600; }
+
+  /* Q&A */
+  .qa-block {
+    margin-bottom: 1.8rem;
+    padding-left: 1.2rem;
+    border-left: 2px solid var(--teal);
+  }
+  .qa-q {
+    font-family: var(--tnr);
+    font-weight: bold;
+    font-size: 1rem;
+    color: var(--teal);
+    margin-bottom: 0.6rem;
+    line-height: 1.6;
+  }
+  .qa-a {
+    font-family: var(--tnr);
+    font-size: 1rem;
+    color: var(--off);
+    line-height: 1.8;
+  }
+  .qa-a ul {
+    margin-left: 1.3rem;
+    margin-top: 0.4rem;
+    display: flex; flex-direction: column; gap: 0.4rem;
+  }
+  .qa-a ul li { list-style: disc; }
+
+  /* Learn block */
+  .learn {
+    margin-top: 1.4rem;
+    padding: 1rem 1.3rem;
+    background: rgba(15,212,192,0.05);
+    border-left: 2px solid var(--teal);
+  }
+  .learn-lbl {
+    font-family: var(--mono);
+    font-size: 0.58rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--teal);
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+  .learn p {
+    font-family: var(--tnr);
+    color: var(--off);
+    font-size: 1rem;
+    line-height: 1.75;
+    margin: 0;
+  }
+
+  /* Reflect block */
+  .reflect {
+    padding: 1.2rem 1.5rem;
+    background: rgba(15,212,192,0.04);
+    border-left: 2px solid var(--teal);
+  }
+  .reflect p {
+    font-family: var(--tnr);
+    font-style: italic;
+    color: var(--off);
+    font-size: 1.02rem;
+    line-height: 1.8;
+    margin: 0;
+  }
+
+  /* Score card */
+  .score-card {
+    background: var(--dark);
+    border: 1px solid var(--border);
+    padding: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 2.5rem;
+    margin-bottom: 1.5rem;
+  }
+  .score-big {
+    font-family: var(--sans);
+    font-size: 4.5rem;
+    font-weight: 700;
+    color: var(--teal);
+    line-height: 1;
+    flex-shrink: 0;
+  }
+  .score-big span { font-size: 2rem; color: var(--muted); }
+  .score-detail h3 {
+    font-family: var(--sans);
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--white);
+    margin-bottom: 0.3rem;
+  }
+  .score-detail p {
+    font-family: var(--tnr);
+    color: var(--muted);
+    font-size: 0.97rem;
+    margin-bottom: 0.6rem;
+  }
+  .score-bar { height: 4px; background: var(--border); overflow: hidden; }
+  .score-fill {
+    height: 100%;
+    width: 86.7%;
+    background: var(--teal);
+  }
+
+  /* Code block */
+  .code-wrap {
+    background: #0a0a0a;
+    border: 1px solid var(--border);
+    margin: 1rem 0;
+    overflow: hidden;
+  }
+  .code-top {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    background: #111;
+    border-bottom: 1px solid var(--border);
+    gap: 0.5rem;
+  }
+  .dot { width: 9px; height: 9px; border-radius: 50%; }
+  .dot-r { background: #ff5f57; }
+  .dot-y { background: #ffbd2e; }
+  .dot-g { background: #28c840; }
+  .code-fname {
+    font-family: var(--mono);
+    font-size: 0.62rem;
+    color: var(--muted);
+    margin-left: 0.3rem;
+  }
+  .code-body {
+    padding: 1.4rem 1.5rem;
+    font-family: var(--mono);
+    font-size: 0.74rem;
+    color: #8baad4;
+    overflow-x: auto;
+    white-space: pre;
+    line-height: 1.75;
+  }
+  .kw { color: #c792ea; }
+  .ty { color: #82aaff; }
+  .st { color: #c3e88d; }
+  .nu { color: #f78c6c; }
+  .cm { color: #4a5568; font-style: italic; }
+  .me { color: #89ddff; }
+  .fn { color: #82aaff; }
+
+  /* Terminal */
+  .terminal {
+    background: #080808;
+    border: 1px solid var(--border);
+    margin: 1rem 0;
+    overflow: hidden;
+  }
+  .term-bar {
+    background: #0f0f0f;
+    padding: 0.4rem 1rem;
+    font-family: var(--mono);
+    font-size: 0.6rem;
+    color: var(--muted);
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; gap: 0.4rem;
+  }
+  .term-body {
+    padding: 1.2rem 1.4rem;
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    color: #ccc;
+    white-space: pre;
+    overflow-x: auto;
+    line-height: 1.8;
+  }
+  .t-in   { color: var(--teal); }
+  .t-ok   { color: #4ade80; }
+  .t-err  { color: #f87171; }
+  .t-head { color: #fbbf24; }
+
+  /* Table */
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: var(--tnr);
+    font-size: 0.97rem;
+    margin: 1rem 0;
+  }
+  .data-table th {
+    font-family: var(--mono);
+    font-size: 0.58rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--teal);
+    padding: 0.65rem 1rem;
+    text-align: left;
+    background: rgba(15,212,192,0.05);
+    border-bottom: 1px solid var(--border2);
+  }
+  .data-table td {
+    padding: 0.6rem 1rem;
+    color: var(--off);
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+    line-height: 1.5;
+  }
+  .data-table tr:last-child td { border-bottom: none; }
+
+  /* ── CONTACT ── */
+  #contact { background: var(--dark); }
+  .contact-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+    gap: 1.2rem;
+    max-width: 780px;
+  }
+  .citem {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 1.3rem 1.5rem;
+    transition: border-color 0.2s;
+  }
+  .citem:hover { border-color: var(--teal); }
+  .ci-label {
+    font-family: var(--mono);
+    font-size: 0.58rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+    margin-bottom: 0.4rem;
+  }
+  .ci-val {
+    font-family: var(--tnr);
+    font-size: 1rem;
+    color: var(--white);
+    word-break: break-all;
+  }
+  .ci-val a { color: var(--teal); text-decoration: none; }
+  .ci-val a:hover { text-decoration: underline; }
+
+  /* ── FOOTER ── */
+  footer {
+    padding: 1.8rem 3.5rem;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--black);
+  }
+  footer p {
+    font-family: var(--mono);
+    font-size: 0.6rem;
+    color: var(--muted);
+    letter-spacing: 0.06em;
+  }
+  footer .teal-accent {
+    color: var(--teal);
+    font-weight: 700;
+    font-family: var(--sans);
+    font-size: 0.75rem;
+  }
+
+  /* ── ANIM ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 800px) {
+    nav { padding: 0 1.5rem; }
+    .nav-links { gap: 1.2rem; }
+    #home { grid-template-columns: 1fr; }
+    .hero-left { min-height: 50vh; padding: 6rem 2rem 3rem; }
+    .hero-right { padding: 3rem 2rem; }
+    section { padding: 5rem 1.5rem; }
+    .about-grid { grid-template-columns: 1fr; }
+    .score-card { flex-direction: column; gap: 1.5rem; }
+    footer { flex-direction: column; gap: 0.5rem; text-align: center; padding: 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#home">MJS · OOP</a>
+  <ul class="nav-links">
+    <li><a href="#home">Home</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#midterm">Midterm</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HOME -->
+<section id="home" style="padding:0;">
+  <div class="hero-left">
+    <p class="hero-label">OOP E-Portfolio · AY 2025–2026</p>
+    <h1 class="hero-name">Mark<br>Jules<br>B. Surat</h1>
+  </div>
+  <div class="hero-right">
+    <p class="hero-sub">BSIT 2-3 · Polytechnic University of the Philippines</p>
+    <p class="hero-intro">This e-portfolio presents my Midterm Project in Object-Oriented Programming. It includes quizzes, activities, and seatwork that demonstrate my understanding of OOP concepts.</p>
+    <div class="hero-tags">
+      <span class="tag teal">Java</span>
+      <span class="tag teal">OOP</span>
+      <span class="tag">BSIT 2-3</span>
+      <span class="tag">PUP</span>
+      <span class="tag">2025–2026</span>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <p class="section-eyebrow">// 00 — introduction</p>
+  <div class="teal-bar"></div>
+  <h2 class="section-title">About Me</h2>
+  <div class="about-grid">
+    <div style="display:flex;flex-direction:column;gap:1.2rem;">
+      <div class="acard">
+        <span class="acard-label">Student Info</span>
+        <div class="info-row">
+          <div class="info-item">
+            <span class="info-key">Full Name</span>
+            <span class="info-val">Mark Jules B. Surat</span>
+          </div>
+          <div class="info-item">
+            <span class="info-key">Course &amp; Section</span>
+            <span class="info-val">BSIT 2-3</span>
+          </div>
+          <div class="info-item">
+            <span class="info-key">School</span>
+            <span class="info-val">Polytechnic University of the Philippines</span>
+          </div>
+          <div class="info-item">
+            <span class="info-key">Subject</span>
+            <span class="info-val">Object-Oriented Programming</span>
+          </div>
+        </div>
+      </div>
+      <div class="acard">
+        <span class="acard-label">3 Words About Me</span>
+        <div class="words-row">
+          <span class="word-chip">Weird</span>
+          <span class="word-chip">Goofy</span>
+          <span class="word-chip">Tryhard</span>
+        </div>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:1.2rem;">
+      <div class="acard">
+        <span class="acard-label">Impression of the Teacher</span>
+        <p style="font-family:var(--tnr);font-size:1rem;color:var(--off);line-height:1.75;">My impression of Sir Bedis is that he seems to be a fun person.</p>
+      </div>
+      <div class="acard">
+        <span class="acard-label">What I Want to Learn This Year</span>
+        <ul class="goal-list">
+          <li>I want to improve my coding skills by using different languages we will be using for this course.</li>
+          <li>I hope to find my true passion when I start learning Object-Oriented Programming.</li>
+          <li>Lastly, I want to expand my tech skills using the course materials in this course.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MIDTERM -->
+<section id="midterm">
+  <p class="section-eyebrow">// 01 — midterm outputs</p>
+  <div class="teal-bar"></div>
+  <h2 class="section-title">Midterm Portfolio</h2>
+
+  <div class="sub-tabs">
+    <button class="tab-btn active" onclick="showTab('quiz',this)">Quizzes</button>
+    <button class="tab-btn" onclick="showTab('assign',this)">Assignment</button>
+    <button class="tab-btn" onclick="showTab('seatwork',this)">Seatwork</button>
+    <button class="tab-btn" onclick="showTab('activities',this)">Activities</button>
+  </div>
+
+  <!-- ── QUIZ ── -->
+  <div class="tab-panel active" id="tab-quiz">
+    <div class="score-card">
+      <div class="score-big">39<span>/45</span></div>
+      <div class="score-detail">
+        <h3>Midterm Quiz #1</h3>
+        <p>Score: 39 out of 45 &nbsp;·&nbsp; 86.7%</p>
+        <div class="score-bar"><div class="score-fill"></div></div>
+      </div>
+    </div>
+    <div class="ocard">
+      <div class="reflect">
+        <p>The quiz covered lessons discussed from Lesson 1 to Lesson 6 and has helped in my preparations for the upcoming midterm examinations. It has also helped me understand more about the theories and concepts behind object-oriented programming.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── ASSIGNMENT ── -->
+  <div class="tab-panel" id="tab-assign">
+    <div class="ocard">
+      <div class="ocard-header">
+        <div class="onum">A1</div>
+        <h3>Midterm Assignment #1 — Introduction to Java</h3>
+      </div>
+      <p class="ocard-meta">Date: March 5, 2026 &nbsp;·&nbsp; Handwritten on yellow pad paper</p>
+      <p class="bt" style="font-style:italic;font-size:0.95rem;color:var(--muted);">Instructions: Kindly read the questions carefully and write your answer in the yellow pad paper together with name, course, subject, and signature on it.</p>
+
+      <div style="margin-top:1.5rem;">
+        <div class="qa-block">
+          <p class="qa-q">1. What is Java programming language? Discuss its key features and advantages.</p>
+          <div class="qa-a">Java is a high-level, object-oriented programming language developed by Sun Microsystems in 1995.
+            <ul>
+              <li><strong>a. Object-Oriented</strong> – Java, being object-oriented means that it can have modular and reusable codes.</li>
+              <li><strong>b. Platform Independence</strong> – Java programs can run on any operating systems with a JVM (Java Virtual Machine).</li>
+              <li><strong>c. Robust and Secure</strong> – Through memory management and handling, Java can provide reliability and good security.</li>
+              <li><strong>d. Open-Source Libraries</strong> – Java has plenty of libraries to extend functionality.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="qa-block">
+          <p class="qa-q">2. Explain the concept of platform independence in Java. How does Java achieve platform independence?</p>
+          <div class="qa-a">Java can run on all operating systems because of a compiler. A compiler translates high-level language (human language) that the programmer codes and then translates it into machine-level language (like binary).</div>
+        </div>
+
+        <div class="qa-block">
+          <p class="qa-q">3. Discuss the main components of a Java program and their roles.</p>
+          <div class="qa-a">The main components of a Java program are Packages, Classes, Methods, Variables, and Statements.
+            <ul>
+              <li><strong>a. Package</strong> – It helps in organizing codes by grouping related classes and interfaces.</li>
+              <li><strong>b. Class</strong> – It defines variables and methods, serving as a blueprint for creating objects in Java.</li>
+              <li><strong>c. Method</strong> – A block of code that performs a specific task; the main() method acts as the program's starting point similar to C programming's main() function.</li>
+              <li><strong>d. Variable</strong> – A memory location that stores and manipulates data.</li>
+              <li><strong>e. Statement</strong> – An instruction that performs an action (e.g. computation, displaying output).</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="qa-block">
+          <p class="qa-q">4. What are the differences between JDK, JRE, and JVM in Java?</p>
+          <div class="qa-a">The JDK (Java Development Kit) is the "toolbox" the developers use to create, compile, and debug Java programs; the JRE (Java Runtime Environment) is the package required to run already-built Java applications; and the JVM (Java Virtual Machine) runs the Java code.</div>
+        </div>
+
+        <div class="qa-block">
+          <p class="qa-q">5. Explain the differences between interpreted and compiled languages. Is Java an interpreted or compiled language?</p>
+          <div class="qa-a">A compiled language, once compiled expresses the instructions of the target machine which is not understandable by humans. While instructions in interpreted languages are not directly executed by the target machine, but instead, read and executed by some other program. Java is both because it is compiled to bytecode, then interpreted and JIT compiled by the JVM at runtime.</div>
+        </div>
+      </div>
+
+      <p class="bt" style="font-size:0.82rem;color:var(--muted);margin-top:1rem;">
+        <strong style="color:var(--muted);">References:</strong><br>
+        https://www.geeksforgeeks.org/java/introduction-to-java/<br>
+        https://www.geeksforgeeks.org/java/java-platform-independent/<br>
+        https://www.geeksforgeeks.org/java/structure-and-members-of-the-java-program/<br>
+        https://www.digitalocean.com/community/tutorials/difference-jdk-vs-jre-vs-jvm
+      </p>
+    </div>
+  </div>
+
+  <!-- ── SEATWORK ── -->
+  <div class="tab-panel" id="tab-seatwork">
+
+    <!-- SW2 Smart Wallet -->
+    <div class="ocard">
+      <div class="ocard-header">
+        <div class="onum">S2</div>
+        <h3>Midterm Seatwork #2 — Smart Wallet System</h3>
+      </div>
+      <p class="ocard-meta">Date: March 25, 2026 &nbsp;·&nbsp; Handwritten Java program</p>
+
+      <div class="code-wrap">
+        <div class="code-top"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div><span class="code-fname">SmartWalletSystemSurat.java</span></div>
+        <div class="code-body"><span class="kw">import</span> java.util.Scanner;
+
+<span class="kw">public class</span> <span class="ty">SmartWalletSystemSurat</span> {
+    <span class="kw">public static void</span> <span class="fn">main</span>(String[] args) {
+
+        Scanner input = <span class="kw">new</span> Scanner(System.in);
+
+        <span class="ty">double</span> balance = <span class="nu">5000</span>;
+        <span class="ty">int</span> choice;
+        <span class="ty">int</span> transactionCounter = <span class="nu">0</span>;
+
+        <span class="kw">while</span> (<span class="kw">true</span>) {
+
+            System.out.<span class="me">println</span>(<span class="st">"\n==== Smart Wallet Menu ===="</span>);
+            System.out.<span class="me">println</span>(<span class="st">"1. View Balance"</span>);
+            System.out.<span class="me">println</span>(<span class="st">"2. Cash In"</span>);
+            System.out.<span class="me">println</span>(<span class="st">"3. Send Money"</span>);
+            System.out.<span class="me">println</span>(<span class="st">"4. Exit"</span>);
+            System.out.<span class="me">println</span>(<span class="st">"Enter your choice"</span>);
+
+            choice = input.<span class="me">nextInt</span>();
+
+            <span class="kw">switch</span> (choice) {
+
+                <span class="kw">case</span> <span class="nu">1</span>:
+                    System.out.<span class="me">println</span>(<span class="st">"Balance = "</span> + balance);
+                    transactionCounter++;
+                    <span class="kw">break</span>;
+
+                <span class="kw">case</span> <span class="nu">2</span>:
+                    System.out.<span class="me">println</span>(<span class="st">"Your current balance is: "</span> + balance);
+                    System.out.<span class="me">println</span>(<span class="st">"Enter amount to cash in: "</span>);
+                    <span class="ty">double</span> cashIn = input.<span class="me">nextDouble</span>();
+
+                    <span class="kw">if</span> (cashIn > <span class="nu">0</span>) {
+                        balance += cashIn;
+                        System.out.<span class="me">println</span>(<span class="st">"Your new balance is: "</span> + balance);
+                        transactionCounter++;
+                    } <span class="kw">else</span> {
+                        System.out.<span class="me">println</span>(<span class="st">"INVALID AMOUNT"</span>);
+                    }
+                    <span class="kw">break</span>;
+
+                <span class="kw">case</span> <span class="nu">3</span>:
+                    System.out.<span class="me">println</span>(<span class="st">"Your current balance is: "</span> + balance);
+                    System.out.<span class="me">println</span>(<span class="st">"Enter amount to send: "</span>);
+                    <span class="ty">double</span> sendCash = input.<span class="me">nextDouble</span>();
+
+                    <span class="kw">if</span> (sendCash >= <span class="nu">100</span> &amp;&amp; sendCash &lt;= <span class="nu">1500</span> &amp;&amp; sendCash &lt; balance) {
+                        balance -= sendCash;
+                        System.out.<span class="me">println</span>(<span class="st">"Transaction Successful!"</span>);
+                        System.out.<span class="me">println</span>(<span class="st">"New Balance is now: "</span> + balance);
+                        transactionCounter++;
+                    } <span class="kw">else</span> {
+                        System.out.<span class="me">println</span>(<span class="st">"ERROR! Amount to send must be between 100 and 1500 and less than the curren balance"</span>);
+                    }
+                    <span class="kw">break</span>;
+
+                <span class="kw">case</span> <span class="nu">4</span>:
+                    System.out.<span class="me">println</span>(<span class="st">"Exiting..."</span>);
+                    System.out.<span class="me">println</span>(<span class="st">"Total Successful Transactions: "</span> + transactionCounter);
+                    <span class="kw">return</span>;
+
+                <span class="kw">default</span>:
+                    System.out.<span class="me">println</span>(<span class="st">"INVALID CHOICE!"</span>);
+            }
+        }
+    }
+}</div>
+      </div>
+
+      <div class="terminal">
+        <div class="term-bar"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div>&nbsp;Console — SmartWalletSystemSurat</div>
+        <div class="term-body"><span class="t-head">Transaction 1:</span>
+<span class="t-head">==== Smart Wallet Menu ====</span>
+1. View Balance  2. Cash In  3. Send Money  4. Exit
+Enter your choice: <span class="t-in">1</span>
+Balance = 5000.0
+
+<span class="t-head">Transaction 2:</span>
+<span class="t-head">==== Smart Wallet Menu ====</span>
+1. View Balance  2. Cash In  3. Send Money  4. Exit
+Enter your choice: <span class="t-in">2</span>
+Your current balance is: 5000.0
+Enter amount to cash in: <span class="t-in">-6</span>
+<span class="t-err">INVALID AMOUNT</span>
+
+<span class="t-head">Transaction 3:</span>
+<span class="t-head">==== Smart Wallet Menu ====</span>
+1. View Balance  2. Cash In  3. Send Money  4. Exit
+Enter your choice: <span class="t-in">2</span>
+Your current balance is: 5000.0
+Enter amount to cash in: <span class="t-in">500</span>
+Your new balance is 5500.0
+
+<span class="t-head">Transaction 4:</span>
+<span class="t-head">==== Smart Wallet Menu ====</span>
+1. View Balance  2. Cash In  3. Send Money  4. Exit
+Enter your choice: <span class="t-in">3</span>
+Your current balance is: 5500.0
+Enter amount to send: <span class="t-in">30</span>
+<span class="t-err">ERROR! Amount to send must be between 100 and 1500 and less than the current balance</span>
+
+<span class="t-head">Transaction 5:</span>
+<span class="t-head">==== Smart Wallet Menu ====</span>
+1. View Balance  2. Cash In  3. Send Money  4. Exit
+Enter your choice: <span class="t-in">3</span>
+Your current balance is: 5500.0
+Enter amount to send: <span class="t-in">1499</span>
+<span class="t-ok">Transaction Successful!</span>
+New Balance is now: 4001.0
+
+<span class="t-head">Transaction 6:</span>
+<span class="t-head">==== Smart Wallet Menu ====</span>
+1. View Balance  2. Cash In  3. Send Money  4. Exit
+Enter your choice: <span class="t-in">4</span>
+Exiting...
+<span class="t-ok">Total Successful Transactions: 3</span></div>
+      </div>
+
+      <div class="learn">
+        <span class="learn-lbl">Short Explanation</span>
+        <p>The while loop keeps the program running by looping infinitely until the user chooses option 4 (Exit) which stops the loop. The switch case handles the execution of the menu options that the user picks. Finally, the if-else statements validate the Cash In and Send Money options by preventing the user to input values that are out of bounds (e.g. sending money greater than the amount of the current balance, cashing in negative amounts).</p>
+      </div>
+    </div>
+
+    <!-- SW3 Student Age Analyzer -->
+    <div class="ocard">
+      <div class="ocard-header">
+        <div class="onum">S3</div>
+        <h3>Midterm Seatwork #3 — Student Age Analyzer</h3>
+      </div>
+      <p class="ocard-meta">Date: April 15, 2026 &nbsp;·&nbsp; Handwritten Java program</p>
+
+      <div class="code-wrap">
+        <div class="code-top"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div><span class="code-fname">StudentAgeAnalyzerSurat.java</span></div>
+        <div class="code-body"><span class="kw">import</span> java.util.Scanner;
+
+<span class="kw">public class</span> <span class="ty">StudentAgeAnalyzerSurat</span> {
+    <span class="kw">public static void</span> <span class="fn">main</span>(String[] args) {
+
+        <span class="ty">int</span> age;
+        String ageCategory = <span class="st">""</span>;
+
+        Scanner input = <span class="kw">new</span> Scanner(System.in);
+
+        System.out.<span class="me">println</span>(<span class="st">"===================="</span>);
+        System.out.<span class="me">println</span>(<span class="st">"Studen Age Analyzer"</span>);
+        System.out.<span class="me">println</span>(<span class="st">"===================="</span>);
+
+        System.out.<span class="me">println</span>(<span class="st">"Enter your Name:"</span>);
+        String name = input.<span class="me">nextLine</span>();
+
+        System.out.<span class="me">println</span>(<span class="st">"Enter your Age:"</span>);
+        age = input.<span class="me">nextInt</span>();
+
+        <span class="kw">if</span> (age >= <span class="nu">0</span> &amp;&amp; age &lt;= <span class="nu">12</span>) {
+            ageCategory = <span class="st">"Child"</span>;
+        } <span class="kw">else if</span> (age >= <span class="nu">13</span> &amp;&amp; age &lt;= <span class="nu">19</span>) {
+            ageCategory = <span class="st">"Teenager"</span>;
+        } <span class="kw">else if</span> (age >= <span class="nu">20</span> &amp;&amp; age &lt;= <span class="nu">59</span>) {
+            ageCategory = <span class="st">"Adult"</span>;
+        } <span class="kw">else if</span> (age >= <span class="nu">60</span>) {
+            ageCategory = <span class="st">"Senior Citizen"</span>;
+        } <span class="kw">else</span> {
+            System.out.<span class="me">println</span>(<span class="st">"INVALID AGE"</span>);
+        }
+
+        System.out.<span class="me">println</span>(<span class="st">"You are classified as a/an "</span> + ageCategory);
+    }
+}</div>
+      </div>
+
+      <div class="learn">
+        <span class="learn-lbl">Learnings</span>
+        <p>This seatwork reinforced the use of if-else if chains to categorize data into ranges. Taking both name and age as input using Scanner, then producing a personalized classification output, showed how input and conditional logic can work together to create meaningful programs.</p>
+      </div>
+    </div>
+
+  </div><!-- end seatwork -->
+
+  <!-- ── ACTIVITIES ── -->
+  <div class="tab-panel" id="tab-activities">
+
+    <!-- A1 Variables -->
+    <div class="ocard">
+      <div class="ocard-header">
+        <div class="onum">A1</div>
+        <h3>Midterm Activity #1 — Variables</h3>
+      </div>
+      <p class="ocard-meta">Date: March 12, 2026 &nbsp;·&nbsp; Handwritten on yellow paper</p>
+
+      <p class="bt"><strong>Part A — Variable Identification Table</strong></p>
+      <table class="data-table">
+        <thead><tr><th>#</th><th>Variable Name</th><th>Data Type</th><th>Variable Type</th><th>Stored In</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>owner</td><td>String</td><td>Instance Variable</td><td>Heap Memory</td></tr>
+          <tr><td>2</td><td>balance</td><td>double</td><td>Instance</td><td>Heap</td></tr>
+          <tr><td>3</td><td>acc1</td><td>Account</td><td>Reference</td><td>Stack</td></tr>
+          <tr><td>4</td><td>acc2</td><td>Account</td><td>Reference</td><td>Stack</td></tr>
+          <tr><td>5</td><td>acc3</td><td>Account</td><td>Reference</td><td>Stack</td></tr>
+          <tr><td>6</td><td>args</td><td>String[]</td><td>Reference</td><td>Stack</td></tr>
+        </tbody>
+      </table>
+
+      <p class="bt" style="margin-top:1rem;"><strong>Part B — Memory Trace</strong></p>
+      <table class="data-table">
+        <thead><tr><th>Statement</th><th>What Happens</th><th>Memory Impact</th></tr></thead>
+        <tbody>
+          <tr><td>Account acc1 = new Account("Carlos", 5000);</td><td>Account object is created; acc1 is pointing to it.</td><td>Object 1 created in Heap: owner="Carlos", balance=5000.</td></tr>
+          <tr><td>Account acc2 = new Account("Diana", 7000);</td><td>Another Account object is created with acc2 pointing to it.</td><td>Object 2 created in Heap: owner="Diana", balance=7000.</td></tr>
+          <tr><td>Account acc3 = acc1;</td><td>acc1's address is now held by acc3.</td><td>acc3 is now pointing to Object 1 instead of acc1.</td></tr>
+          <tr><td>acc2.balance = 8000;</td><td>The Object acc2 is pointing to is now 8000.</td><td>Object 2 balance changes from 7000 to 8000.</td></tr>
+          <tr><td>acc3.owner = "Miguel";</td><td>The owner of the Object acc3 is pointing to is now "Miguel".</td><td>Miguel now owns Object 1 instead of Carlos.</td></tr>
+        </tbody>
+      </table>
+
+      <p class="bt" style="margin-top:1rem;"><strong>Part C — Predicted Output</strong></p>
+      <div class="terminal">
+        <div class="term-bar"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div></div>
+        <div class="term-body">Miguel 5000.0
+Diana  8000.0
+Miguel 5000.0</div>
+      </div>
+
+      <div class="learn">
+        <span class="learn-lbl">Learnings</span>
+        <p>The key insight was that Java object variables are references — assigning acc3 = acc1 does not copy the object but shares the reference. Changing acc3.owner changes the same heap object that acc1 points to.</p>
+      </div>
+    </div>
+
+    <!-- A2 Operators -->
+    <div class="ocard">
+      <div class="ocard-header">
+        <div class="onum">A2</div>
+        <h3>Midterm Activity #2 — Operators</h3>
+      </div>
+
+      <p class="bt"><strong>Part 1 — Program 1: Bitwise Operators</strong></p>
+      <div class="code-wrap">
+        <div class="code-top"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div><span class="code-fname">part1no1.java</span></div>
+        <div class="code-body"><span class="kw">public class</span> <span class="ty">part1no1</span> {
+    <span class="kw">public static void</span> <span class="fn">main</span>(String[] args) {
+        <span class="ty">int</span> a = <span class="nu">420</span>;
+        <span class="ty">int</span> b = <span class="nu">69</span>;
+        <span class="ty">int</span> resultAnd = a &amp; b;
+        <span class="ty">int</span> resultOr  = a | b;
+        System.out.<span class="me">println</span>(<span class="st">"Bitwise AND (12 &amp; 25): "</span> + resultAnd);
+        System.out.<span class="me">println</span>(<span class="st">"Bitwise OR  (12 | 25): "</span> + resultOr);
+    }
+}</div>
+      </div>
+      <div class="terminal">
+        <div class="term-bar"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div>&nbsp;Output</div>
+        <div class="term-body">Bitwise AND (12 &amp; 25): 4
+Bitwise OR  (12 | 25): 485</div>
+      </div>
+
+      <p class="bt" style="margin-top:1.4rem;"><strong>Part 1 — Program 2: Ternary Operator</strong></p>
+      <div class="code-wrap">
+        <div class="code-top"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div><span class="code-fname">part1no2.java</span></div>
+        <div class="code-body"><span class="kw">public class</span> <span class="ty">part1no2</span> {
+    <span class="kw">public static void</span> <span class="fn">main</span>(String[] args) {
+        <span class="ty">int</span> randomAge = <span class="nu">21</span>;   <span class="cm">// also tested with 16</span>
+        <span class="ty">int</span> legalAge  = <span class="nu">18</span>;
+        String status = (randomAge >= legalAge) ? <span class="st">"This npc can go to jail"</span> : <span class="st">"Minor Moments"</span>;
+        System.out.<span class="me">println</span>(status);
+    }
+}</div>
+      </div>
+      <div class="terminal">
+        <div class="term-bar"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div>&nbsp;Output (randomAge = 21)</div>
+        <div class="term-body">This npc can go to jail</div>
+      </div>
+      <div class="terminal" style="margin-top:0.4rem;">
+        <div class="term-bar"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div>&nbsp;Output (randomAge = 16)</div>
+        <div class="term-body">Minor Moments</div>
+      </div>
+
+      <p class="bt" style="margin-top:1.4rem;"><strong>Part 1 — Program 3: Assignment Operators</strong></p>
+      <div class="code-wrap">
+        <div class="code-top"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div><span class="code-fname">part1no3.java</span></div>
+        <div class="code-body"><span class="kw">public class</span> <span class="ty">part1no3</span> {
+    <span class="kw">public static void</span> <span class="fn">main</span>(String[] args) {
+        <span class="ty">double</span> price = <span class="nu">1000.00</span>;
+        price += <span class="nu">7.50</span>;
+        price -= <span class="nu">5.25</span>;
+        price *= <span class="nu">2</span>;
+        price /= <span class="nu">10</span>;
+        System.out.<span class="me">println</span>(price);
+    }
+}</div>
+      </div>
+      <div class="terminal">
+        <div class="term-bar"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div>&nbsp;Output</div>
+        <div class="term-body">200.45</div>
+      </div>
+
+      <p class="bt" style="margin-top:1.4rem;"><strong>Part 2 — Multiple Operators (6 Outputs)</strong></p>
+      <div class="code-wrap">
+        <div class="code-top"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div><span class="code-fname">part2.java</span></div>
+        <div class="code-body"><span class="kw">public static void</span> <span class="fn">main</span>(String[] args) {
+    <span class="cm">// Assignment Operators</span>
+    <span class="ty">int</span> x = <span class="nu">12</span>;
+    <span class="ty">int</span> y = <span class="nu">25</span>;
+    <span class="ty">int</span> z = <span class="nu">3</span>;
+
+    <span class="cm">// Arithmetic Operators</span>
+    <span class="ty">int</span> xyz = x + y * z;
+
+    <span class="cm">// Unary Operators</span>
+    <span class="ty">int</span> a       = <span class="nu">50</span>;
+    <span class="ty">int</span> aResult = a++;
+    <span class="ty">int</span> b       = <span class="nu">50</span>;
+    <span class="ty">int</span> bResult = ++b;
+
+    <span class="cm">// Relational Operators</span>
+    <span class="ty">boolean</span> aVsB = (aResult > bResult);
+
+    <span class="cm">// Logical Operators</span>
+    <span class="ty">boolean</span> logicCheck = (bResult % <span class="nu">2</span> == <span class="nu">0</span>) || (y &lt; <span class="nu">30</span>);
+
+    <span class="cm">// Bitwise Operator</span>
+    <span class="ty">int</span> bitwiseShift = <span class="nu">8</span> >> <span class="nu">1</span>;
+
+    System.out.<span class="me">println</span>(<span class="st">"Assignment Operators: "</span>  + z);
+    System.out.<span class="me">println</span>(<span class="st">"Arithmetic Operators: "</span>  + xyz);
+    System.out.<span class="me">println</span>(<span class="st">"Unary Operators: "</span>       + aResult);
+    System.out.<span class="me">println</span>(<span class="st">"Relational Operators: "</span>  + aVsB);
+    System.out.<span class="me">println</span>(<span class="st">"Logical Operators: "</span>     + logicCheck);
+    System.out.<span class="me">println</span>(<span class="st">"Bitwise Operators: "</span>     + bitwiseShift);
+}</div>
+      </div>
+      <div class="terminal">
+        <div class="term-bar"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div>&nbsp;Output</div>
+        <div class="term-body">Assignment Operators: 3
+Arithmetic Operators: 87
+Unary Operators: 50
+Relational Operators: false
+Logical Operators: true
+Bitwise Operators: 4</div>
+      </div>
+
+      <div class="learn">
+        <span class="learn-lbl">Learnings</span>
+        <p>The trickiest part was understanding increment/decrement: a++ returns the current value then increments, while ++a increments first. Planning the Part 2 program to produce exactly 6 outputs using 5+ operator categories — including at least 2 boolean results — required careful variable design.</p>
+      </div>
+    </div>
+
+    <!-- A3 ATM -->
+    <div class="ocard">
+      <div class="ocard-header">
+        <div class="onum">A3</div>
+        <h3>Midterm Activity #3 — Basic ATM System</h3>
+      </div>
+
+      <div class="code-wrap">
+        <div class="code-top"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div><span class="code-fname">BasicATMSystemSurat.java</span></div>
+        <div class="code-body"><span class="kw">import</span> java.util.Scanner;
+
+<span class="kw">public class</span> <span class="ty">BasicATMSystemSurat</span> {
+    <span class="kw">public static void</span> <span class="fn">main</span>(String[] args) {
+
+        Scanner input = <span class="kw">new</span> Scanner(System.in);
+
+        <span class="ty">int</span> choice;
+        <span class="ty">double</span> balance = <span class="nu">5000</span>;
+
+        <span class="kw">do</span> {
+            System.out.<span class="me">println</span>(<span class="st">"===== ATM MENU ====="</span>);
+            System.out.<span class="me">println</span>(<span class="st">"1. Check Balance"</span>);
+            System.out.<span class="me">println</span>(<span class="st">"2. Deposit"</span>);
+            System.out.<span class="me">println</span>(<span class="st">"3. Withdraw (Up to 2000 only)"</span>);
+            System.out.<span class="me">println</span>(<span class="st">"4. Exit"</span>);
+            System.out.<span class="me">println</span>(<span class="st">"Enter your choice (1-4): "</span>);
+            choice = input.<span class="me">nextInt</span>();
+
+            <span class="kw">switch</span> (choice) {
+
+                <span class="kw">case</span> <span class="nu">1</span>:
+                    System.out.<span class="me">println</span>(<span class="st">"Here is your current balance: "</span> + balance);
+                    <span class="kw">break</span>;
+
+                <span class="kw">case</span> <span class="nu">2</span>:
+                    <span class="ty">double</span> deposit;
+                    System.out.<span class="me">println</span>(<span class="st">"Enter amount to deposit:"</span>);
+                    deposit = input.<span class="me">nextDouble</span>();
+                    balance += deposit;
+                    System.out.<span class="me">println</span>(<span class="st">"You have deposited "</span> + deposit);
+                    System.out.<span class="me">println</span>(<span class="st">"Current Balance: "</span> + balance);
+                    <span class="kw">break</span>;
+
+                <span class="kw">case</span> <span class="nu">3</span>:
+                    <span class="ty">double</span> withdraw;
+                    System.out.<span class="me">println</span>(<span class="st">"Enter amount to withdraw (Up to 2000 only)"</span>);
+                    withdraw = input.<span class="me">nextDouble</span>();
+
+                    <span class="kw">if</span> (withdraw > <span class="nu">0</span> &amp;&amp; withdraw &lt;= <span class="nu">2000</span>) {
+                        balance -= withdraw;
+                        System.out.<span class="me">println</span>(<span class="st">"You have withdrawn "</span> + withdraw);
+                        System.out.<span class="me">println</span>(<span class="st">"Current Balance: "</span> + balance);
+                    } <span class="kw">else if</span> (withdraw > balance) {
+                        System.out.<span class="me">println</span>(<span class="st">"MUST.NOT.EXCEED.CURRENT.BALANCE"</span>);
+                    } <span class="kw">else</span> {
+                        System.out.<span class="me">println</span>(<span class="st">"MUST.NOT.EXCEED.2000."</span>);
+                        System.out.<span class="me">println</span>(<span class="st">"AND NO BS VALUES LIKE -6767"</span>);
+                    }
+                    <span class="kw">break</span>;
+
+                <span class="kw">case</span> <span class="nu">4</span>:
+                    System.out.<span class="me">println</span>(<span class="st">"Bye-bye"</span>);
+                    <span class="kw">return</span>;
+
+                <span class="kw">default</span>:
+                    System.out.<span class="me">println</span>(<span class="st">"Ayos kasi. 1-4 nga lang 'di ba?"</span>);
+            }
+
+        } <span class="kw">while</span> (<span class="kw">true</span>);
+    }
+}</div>
+      </div>
+
+      <p class="bt"><strong>Output (Run 1 — Check Balance → Deposit → Exit):</strong></p>
+      <div class="terminal">
+        <div class="term-bar"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div>&nbsp;Console — BasicATMSystemSurat</div>
+        <div class="term-body"><span class="t-head">===== ATM MENU =====</span>
+1. Check Balance  2. Deposit  3. Withdraw (Up to 2000 only)  4. Exit
+Enter your choice (1-4): <span class="t-in">1</span>
+Here is your current balance: 5000.0
+<span class="t-head">===== ATM MENU =====</span>
+Enter your choice (1-4): <span class="t-in">2</span>
+Enter amount to deposit: <span class="t-in">350</span>
+<span class="t-ok">You have deposited 350.0</span>
+Current Balance: 5350.0
+<span class="t-head">===== ATM MENU =====</span>
+Enter your choice (1-4): <span class="t-in">4</span>
+<span class="t-ok">Bye-bye</span></div>
+      </div>
+      <p class="bt"><strong>Output (Run 2 — Withdraw → Exit):</strong></p>
+      <div class="terminal">
+        <div class="term-bar"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div>&nbsp;Console — BasicATMSystemSurat</div>
+        <div class="term-body"><span class="t-head">===== ATM MENU =====</span>
+1. Check Balance  2. Deposit  3. Withdraw (Up to 2000 only)  4. Exit
+Enter your choice (1-4): <span class="t-in">3</span>
+Enter amount to withdraw (Up to 2000 only): <span class="t-in">420</span>
+<span class="t-ok">You have withdrawn 420.0</span>
+Current Balance: 4930.0
+<span class="t-head">===== ATM MENU =====</span>
+Enter your choice (1-4): <span class="t-in">4</span>
+<span class="t-ok">Bye-bye</span></div>
+      </div>
+
+      <div class="learn">
+        <span class="learn-lbl">Learnings</span>
+        <p>The do-while loop guarantees the menu appears at least once before checking the loop condition. Input validation for withdrawals (must be positive and ≤ 2000) was key. The custom error messages like "Ayos kasi. 1-4 nga lang 'di ba?" made the program more personal and fun to write.</p>
+      </div>
+    </div>
+
+    <!-- A4 Enrollment -->
+    <div class="ocard">
+      <div class="ocard-header">
+        <div class="onum">A4</div>
+        <h3>Midterm Activity #4 — Student Enrollment Assessment System</h3>
+      </div>
+
+      <div class="code-wrap">
+        <div class="code-top"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div><span class="code-fname">EnrollmentAssessmentSystemSurat.java</span></div>
+        <div class="code-body"><span class="kw">import</span> java.util.Scanner;
+
+<span class="kw">public class</span> <span class="ty">EnrollmentAssessmentSystemSurat</span> {
+    <span class="kw">public static void</span> <span class="fn">main</span>(String[] args) {
+
+        <span class="cm">// Input Taking</span>
+        Scanner sc = <span class="kw">new</span> Scanner(System.in);
+
+        System.out.<span class="me">println</span>(<span class="st">"Enter your name: "</span>);
+        String name = sc.<span class="me">nextLine</span>();
+
+        System.out.<span class="me">println</span>(<span class="st">"Senior High School Strand"</span>);
+        System.out.<span class="me">println</span>(<span class="st">"(STEM, ABM, HUMSS, TVL, Others): "</span>);
+        String strand = sc.<span class="me">nextLine</span>().<span class="me">toUpperCase</span>();
+
+        System.out.<span class="me">println</span>(<span class="st">"Entrance Exam Score (0-100): "</span>);
+        <span class="ty">double</span> examScore = sc.<span class="me">nextDouble</span>();
+
+        System.out.<span class="me">println</span>(<span class="st">"Enter Interview Score (0-100): "</span>);
+        <span class="ty">double</span> interviewScore = sc.<span class="me">nextDouble</span>();
+
+        sc.<span class="me">nextLine</span>(); <span class="cm">// Clear Buffer</span>
+
+        System.out.<span class="me">println</span>(<span class="st">"First Screening Result (Pass/Fail)"</span>);
+        String screening = sc.<span class="me">nextLine</span>().<span class="me">toLowerCase</span>();
+
+        <span class="cm">// Calculate finalScore</span>
+        <span class="ty">double</span> finalScore = (examScore * <span class="nu">0.6</span>) + (interviewScore * <span class="nu">0.4</span>);
+
+        <span class="cm">// Validation if pasado ba</span>
+        String admissionResult;
+
+        <span class="kw">if</span> (screening.<span class="me">equals</span>(<span class="st">"pass"</span>)) {
+            <span class="kw">if</span>      (finalScore >= <span class="nu">85</span>) { admissionResult = <span class="st">"Admitted with Scholarship"</span>; }
+            <span class="kw">else if</span> (finalScore >= <span class="nu">75</span>) { admissionResult = <span class="st">"Admitted"</span>; }
+            <span class="kw">else if</span> (finalScore >= <span class="nu">65</span>) { admissionResult = <span class="st">"Waitlisted"</span>; }
+            <span class="kw">else</span>                         { admissionResult = <span class="st">"Not Qualified"</span>; }
+        } <span class="kw">else</span> {
+            admissionResult = <span class="st">"Not Qualified"</span>;
+        }
+
+        <span class="cm">// Switch Case for Program Recommendation</span>
+        String programReco;
+        <span class="kw">switch</span> (strand) {
+            <span class="kw">case</span> <span class="st">"STEM"</span>:   programReco = <span class="st">"BSIT/BSCS"</span>;             <span class="kw">break</span>;
+            <span class="kw">case</span> <span class="st">"ABM"</span>:    programReco = <span class="st">"BSBA"</span>;                  <span class="kw">break</span>;
+            <span class="kw">case</span> <span class="st">"HUMSS"</span>:  programReco = <span class="st">"BSED/AB Communication"</span>; <span class="kw">break</span>;
+            <span class="kw">case</span> <span class="st">"TVL:"</span>:   programReco = <span class="st">"BSIT"</span>;                  <span class="kw">break</span>;
+            <span class="kw">default</span>:       programReco = <span class="st">"General Program"</span>;        <span class="kw">break</span>;
+        }
+
+        <span class="cm">// Display Everything</span>
+        System.out.<span class="me">println</span>(<span class="st">"==== Enrollment Assessment Result ===="</span>);
+        System.out.<span class="me">println</span>(<span class="st">""</span>);
+        System.out.<span class="me">println</span>(<span class="st">"Name: "</span>                  + name);
+        System.out.<span class="me">println</span>(<span class="st">"SHS Strand: "</span>            + strand);
+        System.out.<span class="me">println</span>(<span class="st">"Final Evaluation Score: "</span> + finalScore);
+        System.out.<span class="me">println</span>(<span class="st">"Admission Result: "</span>       + admissionResult);
+        System.out.<span class="me">println</span>(<span class="st">"Recommended Program: "</span>    + programReco);
+    }
+}</div>
+      </div>
+
+      <p class="bt"><strong>Output 1:</strong></p>
+      <div class="terminal">
+        <div class="term-bar"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div>&nbsp;Console — EnrollmentAssessmentSystemSurat</div>
+        <div class="term-body">Enter your name: <span class="t-in">Mark Jules B. Surat</span>
+Senior High School Strand (STEM, ABM, HUMSS, TVL, Others): <span class="t-in">stem</span>
+Entrance Exam Score (0-100): <span class="t-in">80</span>
+Enter Interview Score (0-100): <span class="t-in">77.125</span>
+First Screening Result (Pass/Fail): <span class="t-in">Pass</span>
+<span class="t-head">==== Enrollment Assessment Result ====</span>
+
+Name: Mark Jules B. Surat
+SHS Strand: STEM
+Final Evaluation Score: 78.85
+<span class="t-ok">Admission Result: Admitted</span>
+Recommended Program: BSIT/BSCS</div>
+      </div>
+      <p class="bt"><strong>Output 2:</strong></p>
+      <div class="terminal">
+        <div class="term-bar"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div>&nbsp;Console — EnrollmentAssessmentSystemSurat</div>
+        <div class="term-body">Enter your name: <span class="t-in">Teio Ballin</span>
+Senior High School Strand (STEM, ABM, HUMSS, TVL, Others): <span class="t-in">Others</span>
+Entrance Exam Score (0-100): <span class="t-in">75</span>
+Enter Interview Score (0-100): <span class="t-in">75</span>
+First Screening Result (Pass/Fail): <span class="t-in">pass</span>
+<span class="t-head">==== Enrollment Assessment Result ====</span>
+
+Name: Teio Ballin
+SHS Strand: OTHERS
+Final Evaluation Score: 75.0
+<span class="t-ok">Admission Result: Admitted</span>
+Recommended Program: General Program</div>
+      </div>
+
+      <div class="learn">
+        <span class="learn-lbl">Learnings</span>
+        <p>Nested if-else combined with switch-case created a realistic multi-criteria decision system. The weighted average formula (60% exam + 40% interview) reinforced arithmetic operators in a real-world context. Using my own name as a test case made debugging more engaging and meaningful.</p>
+      </div>
+    </div>
+
+    <!-- A5 Expense Tracker -->
+    <div class="ocard">
+      <div class="ocard-header">
+        <div class="onum">A5</div>
+        <h3>Midterm Activity #5 — Personal Expense Tracker</h3>
+      </div>
+      <div class="code-wrap">
+        <div class="code-top"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div><span class="code-fname">ExpenseTrackerSurat.java</span></div>
+        <div class="code-body"><span class="kw">import</span> java.util.Scanner;
+
+<span class="kw">public class</span> <span class="ty">ExpenseTrackerSurat</span> {
+
+    <span class="kw">public static void</span> <span class="fn">printTitle</span>() {
+        System.out.<span class="me">println</span>(<span class="st">"========================="</span>);
+        System.out.<span class="me">println</span>(<span class="st">"Personal Expense Tracker"</span>);
+        System.out.<span class="me">println</span>(<span class="st">"========================="</span>);
+    }
+
+    <span class="kw">public static double</span> <span class="fn">totalExpenses</span>(<span class="ty">double</span> food, <span class="ty">double</span> transportation, <span class="ty">double</span> otherExpense) {
+        <span class="kw">return</span> food + transportation + otherExpense;
+    }
+
+    <span class="kw">public static</span> String <span class="fn">checkExceed</span>(<span class="ty">double</span> total, <span class="ty">double</span> budget) {
+        <span class="kw">if</span> (total > budget) {
+            <span class="kw">return</span> <span class="st">"You've exceeded your budget"</span>;
+        } <span class="kw">else</span> {
+            <span class="kw">return</span> <span class="st">"You are within your budget"</span>;
+        }
+    }
+
+    <span class="kw">public static void</span> <span class="fn">printSummary</span>(<span class="ty">double</span> total, <span class="ty">double</span> budget, String status) {
+
+        <span class="cm">// Enhancement 1: Calculate Remaining Budget</span>
+        <span class="ty">double</span> remaining = total - budget;
+
+        System.out.<span class="me">println</span>(<span class="st">"Expense Summary"</span>);
+        System.out.<span class="me">println</span>(<span class="st">"Total Expenses: "</span>   + total);
+        System.out.<span class="me">println</span>(<span class="st">"Budget: "</span>           + budget);
+        System.out.<span class="me">println</span>(<span class="st">"Remaining Budget: "</span> + remaining);
+        System.out.<span class="me">println</span>(<span class="st">"Status: "</span>           + status);
+    }
+
+    <span class="cm">// Main Method</span>
+    <span class="kw">public static void</span> <span class="fn">main</span>(String[] args) {
+
+        Scanner input = <span class="kw">new</span> Scanner(System.in);
+
+        <span class="fn">printTitle</span>();
+
+        <span class="cm">// Enhancement 2: User Input</span>
+        System.out.<span class="me">print</span>(<span class="st">"Enter food expense: "</span>);
+        <span class="ty">double</span> food = input.<span class="me">nextDouble</span>();
+        System.out.<span class="me">print</span>(<span class="st">"Enter transportation expense: "</span>);
+        <span class="ty">double</span> transportation = input.<span class="me">nextDouble</span>();
+        System.out.<span class="me">print</span>(<span class="st">"Enter other expenses: "</span>);
+        <span class="ty">double</span> other = input.<span class="me">nextDouble</span>();
+        System.out.<span class="me">print</span>(<span class="st">"Enter your total budget: "</span>);
+        <span class="ty">double</span> budget = input.<span class="me">nextDouble</span>();
+
+        System.out.<span class="me">println</span>(<span class="st">"\n"</span>);
+
+        <span class="ty">double</span> total  = <span class="fn">totalExpenses</span>(food, transportation, other);
+        String status = <span class="fn">checkExceed</span>(total, budget);
+
+        <span class="fn">printSummary</span>(total, budget, status);
+    }
+}</div>
+      </div>
+
+      <p class="bt"><strong>Output:</strong></p>
+      <div class="terminal">
+        <div class="term-bar"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div>&nbsp;Console — ExpenseTrackerSurat</div>
+        <div class="term-body">=========================
+Personal Expense Tracker
+=========================
+Enter food expense: <span class="t-in">135</span>
+Enter transportation expense: <span class="t-in">100</span>
+Enter other expenses: <span class="t-in">50</span>
+Enter your total budget: <span class="t-in">300</span>
+
+Expense Summary
+Total Expenses: 285.0
+Budget: 300.0
+Remaining Budget: -15.0
+Status: You are within your budget</div>
+      </div>
+
+      <div class="learn">
+        <span class="learn-lbl">Learnings</span>
+        <p>This was the first activity using multiple static methods — breaking a program into smaller functions made the code much cleaner and easier to read. Separating printTitle(), totalExpenses(), checkExceed(), and printSummary() into their own methods demonstrated how modular design works in Java.</p>
+      </div>
+    </div>
+
+  </div><!-- end activities -->
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <p class="section-eyebrow">// 02 — contact</p>
+  <div class="teal-bar"></div>
+  <h2 class="section-title">If you have any questions</h2>
+  <div class="contact-grid">
+    <div class="citem">
+      <div class="ci-label">Full Name</div>
+      <div class="ci-val">Mark Jules B. Surat</div>
+    </div>
+    <div class="citem">
+      <div class="ci-label">School</div>
+      <div class="ci-val">Polytechnic University of the Philippines</div>
+    </div>
+    <div class="citem">
+      <div class="ci-label">Section</div>
+      <div class="ci-val">BSIT 2-3</div>
+    </div>
+    <div class="citem">
+      <div class="ci-label">Subject</div>
+      <div class="ci-val">Object-Oriented Programming</div>
+    </div>
+    <div class="citem">
+      <div class="ci-label">Email</div>
+      <div class="ci-val"><a href="mailto:suratmarkjules456@gmail.com">suratmarkjules456@gmail.com</a></div>
+    </div>
+    <div class="citem">
+      <div class="ci-label">Facebook</div>
+      <div class="ci-val"><a href="https://www.facebook.com/markjules.surat.986" target="_blank" rel="noopener">Mark Jules Surat</a></div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2026 Mark Jules B. Surat — BSIT 2-3 · PUP</p>
+  <span class="teal-accent">OOP E-Portfolio</span>
+</footer>
+
+<script>
+  function showTab(name, btn) {
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('tab-' + name).classList.add('active');
+    btn.classList.add('active');
+  }
+</script>
+</body>
+</html>
